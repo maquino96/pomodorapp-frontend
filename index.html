@@ -28,28 +28,18 @@
             <button id="start-session">Start Session</button>
             <button id="stop-session">Stop Session</button>
         </div>
-       
-        
-        <div class = "characterInfo">
-            <div id="detailed-info">
 
-                <form id="form">
-                    <input type="hidden" value="Character's id" id="characterId"/> <!-- Assign character id as a value here -->
-                    <input type="text" placeholder="Enter Calories" id="calories"/>
-                    <input type="submit" value="Add Calories"/>
-                </form>
-        
-            </div>
-            <div>
-                <form id="new-char-form">
-                    <input type="hidden" value="Character's id" id="characterId"/> <!-- Assign character id as a value here -->
-                    <input type="text" placeholder="Enter Name" id="name"/>
-                    <input type="text" placeholder="Enter Image URL" id="link"/>
-                    <input type="submit" value="Submit"/>
-                </form>
-    
-            </div>
+        <div class = 'checklist'>
+            <ul class = 'task-list'>       
+            </ul>
         </div>
+
+        <div class = 'Completed-sessions'> 
+            <ul class = 'session-list'>       
+            </ul>
+        </div>
+
+       
         <script src="src/index.js"></script>
     </body>
 </html>

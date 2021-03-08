@@ -4,10 +4,56 @@ const div = document.querySelector('div#button-div')
 const url = 'http://localhost:3000'
 const login = document.querySelector('form#login-form')
 const signup = document.querySelector('form#signup-form')
-const task = document.querySelector('form#task-form')
+const taskForm = document.querySelector('form#task-form')
+const taskList = document.querySelector('ul.task-list')
+const sessionList = document.querySelector('ul.session-list')
 
 
-task.style.display = 'none'
+taskForm.style.display = 'none'
+
+
+// Functions
+
+function getTasks(){
+    taskList.innerHTML = ''
+
+    fetch(`${url}/users/${login.dataset.id}/tasks`)
+        .then(r => r.json())
+        .then( tasks => {
+            tasks.forEach( task => {
+                const li = document.createElement('li')
+                li.textContent = task.name
+                taskList.append(li)
+            })
+
+        })        
+}
+
+function getSessions(){
+    sessionList.innerHTML = ''
+
+    fetch(`${url}/users/${login.dataset.id}/sessions`)
+        .then(r => r.json())
+        .then( sessions => {
+            sessions.forEach( session => {
+                const li = document.createElement('li')
+                li.textContent = session.id
+                sessionList.append(li)
+
+                fetch(`${url}/study_sessions/${session.id}/tasks`)
+                    .then( r => r.json())
+                    .then( tasks => {
+                        tasks.forEach( task => {
+                        const innerLi = document.createElement('li')
+                        innerLi.textContent = task.name
+                        li.append(innerLi)
+                        })
+            })
+        })
+    })
+}
+
+// Event Listeners
 
 login.addEventListener('submit', event => {
     event.preventDefault()
@@ -21,7 +67,9 @@ login.addEventListener('submit', event => {
         .then(r => r.json())
         .then(user => {
             login.dataset.id = user.id
-            task.style.display = 'block'
+            taskForm.style.display = 'block'
+            getTasks()
+            getSessions()
             console.log(user)})
         .catch( error => console.log(error))
 
@@ -44,7 +92,7 @@ signup.addEventListener('submit', event => {
 
 })
 
-task.addEventListener('submit', event => {
+taskForm.addEventListener('submit', event => {
     event.preventDefault()
 
     fetch(`${url}/tasks`, {
@@ -57,6 +105,7 @@ task.addEventListener('submit', event => {
     })
         .then(r => r.json())
         .then(task => {
+            getTasks()
             console.log(task)
         })
         .catch( error => console.log(error))
@@ -66,7 +115,6 @@ task.addEventListener('submit', event => {
 
 
 div.addEventListener('click', event => {
-    // event.preventDefault()
 
     if (event.target.matches('button#start-session')) {
         fetch(`${url}/study_sessions`, {
