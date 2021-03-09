@@ -7,14 +7,16 @@ const body = document.querySelector('body')
 const loginForm = document.querySelector('form#login-form')
 const signupForm = document.querySelector('form#signup-form')
 const taskForm = document.querySelector('form#task-form')
-const taskList = document.querySelector('ul.task-list')
-const sessionList = document.querySelector('ul.session-list')
+const taskList = document.querySelector('ul#task-list')
+const sessionList = document.querySelector('ul#session-list')
 const adviceDiv = document.querySelector('div#advice')
+const completedDiv = document.querySelector('div#completed-tasks')
 
 
 document.addEventListener("DOMContentLoaded", event => {
     taskForm.style.display = 'none'
     formListeners()
+    clickListeners()
 })
 
 // Functions
@@ -33,7 +35,16 @@ function getTasks(){
         .then( tasks => {
             tasks.forEach( task => {
                 const li = document.createElement('li')
+                li.dataset.id = task.id
                 li.textContent = task.name
+                const completeButton = document.createElement('button')
+                completeButton.id = "completeButton"
+                completeButton.textContent = "✅"
+                const deleteButton = document.createElement('button')
+                deleteButton.id = "deleteButton"
+                deleteButton.textContent = "❌"
+                li.prepend(completeButton)
+                li.append(deleteButton)
                 taskList.append(li)
             })
 
@@ -41,17 +52,19 @@ function getTasks(){
 }
 
 //Get tasks associated with each session
-const getSessionTasks = (session) => {
+const getSessionTasks = (sessionId) => {
     const ul = document.createElement('ul')
-    fetch(`${dbUrl}/study_sessions/${session.id}/tasks`)
+    fetch(`${dbUrl}/study_sessions/${sessionId}/tasks`)
         .then( r => r.json())
         .then( tasks => {
+            console.log(tasks)
             tasks.forEach( task => {
                 const li = document.createElement('li')
                 li.textContent = task.name
                 ul.append(li)
             })
         })
+        .catch(error => console.log(error))
     return ul
 }
 
@@ -66,16 +79,7 @@ function getSessions(){
                 const li = document.createElement('li')
                 li.textContent = session.id
                 sessionList.append(li)
-                sessionList.append(getSessionTasks(session))
-                // fetch(`${dbUrl}/study_sessions/${session.id}/tasks`)
-                //     .then( r => r.json())
-                //     .then( tasks => {
-                //         tasks.forEach( task => {
-                //             const innerLi = document.createElement('li')
-                //             innerLi.textContent = task.name
-                //             li.append(innerLi)
-                //         })
-                //     })
+                sessionList.append(getSessionTasks(session.id))
         })
     })
 }
@@ -180,8 +184,38 @@ div.addEventListener('click', event => {
         .then(r => r.json())
         .then( studySession => {
             console.log(studySession)
-            div.dataset.id = null})
+            div.dataset.id = null
+            getSessions()
+            completedDiv.innerHTML=''
+        })
     }
 
 })
 
+const clickListeners = () => {
+    body.addEventListener('click', event => {
+        const task_id = event.target.parentElement.dataset.id
+        const study_session_id = div.dataset.id
+
+        if(event.target.matches('button#completeButton')){
+            fetch(`${dbUrl}/study_tasks`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json'
+                },
+                body: JSON.stringify({task_id, study_session_id})
+            })
+                .then(() => {
+                    getTasks()
+                    completedDiv.innerHTML = ''
+                    completedDiv.append(getSessionTasks(study_session_id))
+                })
+                .catch(error => console.log(error))
+        }
+
+        if(event.target.matches('button#deleteButton')){
+            
+        }
+    })
+}
