@@ -76,8 +76,9 @@ function getSessions(){
         .then(r => r.json())
         .then( sessions => {
             sessions.forEach(session => {
+                debugger
                 const li = document.createElement('li')
-                li.textContent = session.id
+                li.textContent = `Session Time: ${session.time_spent}`
                 sessionList.append(li)
                 sessionList.append(getSessionTasks(session.id))
         })
