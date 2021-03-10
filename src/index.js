@@ -16,6 +16,8 @@ const container = document.querySelector('div#container')
 const welcomeDiv = document.querySelector('div#welcome-div')
 const errorP = document.querySelector("p#error-p")
 const spotifyDiv = document.querySelector("div#spotify-div")
+const startButton = document.querySelector("button#start-session")
+const stopButton = document.querySelector("button#stop-session")
 
 
 document.addEventListener("DOMContentLoaded", event => {
@@ -34,6 +36,11 @@ const toggleRegistration = () => {
 //Toggle hiding p element that shows login/registration errors
 const toggleErrorP = () => {
     errorP.classList.toggle('hidden')
+}
+
+const startStop = () => {
+    startButton.classList.toggle('hidden')
+    stopButton.classList.toggle('hidden')
 }
 
 //Fetch advice from API
@@ -56,10 +63,12 @@ function getTasks(){
                 li.textContent = task.name
                 const completeButton = document.createElement('button')
                 completeButton.id = "completeButton"
-                completeButton.textContent = "✅"
+                // completeButton.textContent = "✅"
+                completeButton.textContent = "Complete"
                 const deleteButton = document.createElement('button')
                 deleteButton.id = "deleteButton"
-                deleteButton.textContent = "❌"
+                // deleteButton.textContent = "❌"
+                deleteButton.textContent = "Delete"
                 li.prepend(completeButton)
                 li.append(deleteButton)
                 taskList.append(li)
@@ -199,7 +208,7 @@ const formListeners = () => {
 
 //Listens for study session start/stop
 sessionDiv.addEventListener('click', event => {
-
+    
     if (event.target.matches('button#start-session')) {
         fetch(`${dbUrl}/study_sessions`, {
             method: 'POST',
@@ -211,6 +220,7 @@ sessionDiv.addEventListener('click', event => {
         })
         .then(r => r.json())
         .then( studySession => {
+            startStop()
             console.log(studySession)
             sessionDiv.dataset.id = studySession.id
         })
@@ -225,9 +235,10 @@ sessionDiv.addEventListener('click', event => {
         })
         .then(r => r.json())
         .then( studySession => {
+            startStop()
             console.log(studySession)
-            sessionDiv.dataset.id = null
             getSessions()
+            sessionDiv.dataset.id = null
             completedDiv.innerHTML=''
         })
     }
