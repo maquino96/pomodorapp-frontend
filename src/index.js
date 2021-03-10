@@ -65,13 +65,11 @@ function getTasks(){
                 li.dataset.id = task.id
                 li.textContent = task.name
                 const completeButton = document.createElement('button')
-                completeButton.id = "completeButton"
-                // completeButton.textContent = "✅"
-                completeButton.textContent = "Complete"
+                completeButton.classList.add("completeButton")
+                completeButton.textContent = "✅"
                 const deleteButton = document.createElement('button')
-                deleteButton.id = "deleteButton"
-                // deleteButton.textContent = "❌"
-                deleteButton.textContent = "Delete"
+                deleteButton.classList.add("deleteTaskButton")
+                deleteButton.textContent = "❌"
                 li.prepend(completeButton)
                 li.append(deleteButton)
                 taskList.append(li)
@@ -86,7 +84,6 @@ const getSessionTasks = (sessionId) => {
     fetch(`${dbUrl}/study_sessions/${sessionId}/tasks`)
         .then( r => r.json())
         .then( tasks => {
-            console.log(tasks)
             tasks.forEach( task => {
                 const li = document.createElement('li')
                 li.textContent = task.name
@@ -116,7 +113,16 @@ function getSessions(){
                 date = new Date(Date.parse(session.created_at)).toLocaleDateString()
 
                 const li = document.createElement('li')
+<<<<<<< HEAD
                 li.textContent = `Created On: ${date} Session Time: ${session.time_spent}`
+=======
+                li.dataset.id = session.id
+                li.textContent = `Session Time: ${session.time_spent}`
+                const deleteButton = document.createElement('button')
+                deleteButton.classList.add("deleteSessionButton")
+                deleteButton.textContent = "❌"
+                li.append(deleteButton)
+>>>>>>> f1be42aee917ed635f66877c41eb4e02ab25c585
                 sessionList.append(li)
                 sessionList.append(getSessionTasks(session.id))
         })
@@ -144,7 +150,6 @@ const formListeners = () => {
             })
                 .then(r => r.json())
                 .then(user => {
-                    console.log(user)
                     if (user) {
                         loginForm.dataset.id = user.id
                         welcomeDiv.style.display = 'none'
@@ -154,7 +159,6 @@ const formListeners = () => {
                         getTasks()
                         getSessions()
                         getAdvice()
-                        console.log(user)
                     } else {
                         if(errorP.classList.contains('hidden')){
                             toggleErrorP()
@@ -261,14 +265,15 @@ sessionDiv.addEventListener('click', event => {
 
 const clickListeners = () => {
     body.addEventListener('click', event => {
-        const task_id = event.target.parentElement.dataset.id
-        const study_session_id = sessionDiv.dataset.id
-
+        
         if(event.target.matches('button#register-button')){
             toggleRegistration()
         }
 
-        if(event.target.matches('button#completeButton')){
+        if(event.target.matches('button.completeButton')){
+            const task_id = event.target.parentElement.dataset.id
+            const study_session_id = sessionDiv.dataset.id
+
             fetch(`${dbUrl}/study_tasks`, {
                 method: 'POST',
                 headers: {
@@ -285,11 +290,38 @@ const clickListeners = () => {
                 .catch(error => console.log(error))
         }
 
-        if(event.target.matches('button#deleteButton')){
-            
+        //Delete TASK button action
+        if(event.target.matches('button.deleteTaskButton')){
+            const task_id = event.target.parentElement.dataset.id
+            fetch(`${dbUrl}/tasks/${task_id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json'
+                }
+            })
+                .then(() => getTasks())
+                .catch(error => console.log(error))
+        }
+
+        if (event.target.matches('button.deleteSessionButton')){
+            const session_id = event.target.parentElement.dataset.id
+            console.log(session_id)
+            fetch(`${dbUrl}/study_sessions/${session_id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json'
+                }
+            })
+                .then(() => getSessions())
+                .catch(error => console.log(error))
         }
     })
 }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> f1be42aee917ed635f66877c41eb4e02ab25c585
