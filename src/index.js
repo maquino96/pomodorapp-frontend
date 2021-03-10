@@ -1,3 +1,5 @@
+
+
 const dbUrl = 'http://localhost:3000'
 const adviceUrl = 'https://api.adviceslip.com/advice'
 
@@ -19,6 +21,7 @@ const spotifyDiv = document.querySelector("div#spotify-div")
 const startButton = document.querySelector("button#start-session")
 const stopButton = document.querySelector("button#stop-session")
 
+const userInfo = document.querySelector('div#user-info')
 
 document.addEventListener("DOMContentLoaded", event => {
     container.style.display = 'none'
@@ -101,9 +104,19 @@ function getSessions(){
     fetch(`${dbUrl}/users/${loginForm.dataset.id}/sessions`)
         .then(r => r.json())
         .then( sessions => {
+            
+            //user-info number of sessions & total time 
+            const sumFunc = (acc,cv) => acc+cv
+            const sum = sessions.map( session => session.time_spent).reduce(sumFunc) 
+            userInfo.querySelector('p#time').innerText = `Completed Sessions: ${sessions.length}, Total time: ${sum}`
+
+              
             sessions.forEach(session => {
+
+                date = new Date(Date.parse(session.created_at)).toLocaleDateString()
+
                 const li = document.createElement('li')
-                li.textContent = `Session Time: ${session.time_spent}`
+                li.textContent = `Created On: ${date} Session Time: ${session.time_spent}`
                 sessionList.append(li)
                 sessionList.append(getSessionTasks(session.id))
         })
@@ -137,6 +150,7 @@ const formListeners = () => {
                         welcomeDiv.style.display = 'none'
                         container.style.display = 'inline-grid'
                         spotifyDiv.innerHTML = `<iframe src="${user.playlist}" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`
+                        userInfo.querySelector('h3#username').innerText = user.name
                         getTasks()
                         getSessions()
                         getAdvice()
@@ -276,3 +290,6 @@ const clickListeners = () => {
         }
     })
 }
+
+
+
