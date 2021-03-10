@@ -24,21 +24,31 @@
         </div>
 
         <div id ="container">
+            
             <div id= "user-info">
-                <h3 id="username"></h3>
+                <h3>PomodorApp</h3>
+                <h4 id="username"></h4>
                 <p id ="time">Total Time/Sessions</p>
             </div>
 
             <div id = "session-div" data-id = null>
                 timer and interval settings here
                 <br>
-                <!----
-                <form id="interval-form">
-                    <input type ="number">
-                </form>
-                -->
                 <button id="start-session">Start Session</button>
                 <button id="stop-session" class = "hidden">Stop Session</button>
+                <br>
+                <button id="timer-settings">Edit Timers</button>
+                <form id="timer-form" class ='hidden'>
+                    Enter times in minutes:
+                    <br>
+                    <label for="workTimer">Work Timer:  </label>
+                    <input type="number" id="workTimer"/>
+                    <br>
+                    <label for="breakTimer">Break Timer:</label>
+                    <input type="number" id="breakTimer">
+                    <input type="submit" value="Update Timers"/>
+                </form>
+                <p id="sessionMsgs"></p>
             </div>
 
             <div id = "spotify-div">
@@ -48,21 +58,26 @@
             </div>
             
             <div id = 'completed-sessions'> 
-                <ul id = 'session-list'>Sessions       
+                <ul id = 'session-list' class = "scroll">Sessions       
                 </ul>
             </div>
 
             <div id = "task-div-holders">
                 <div id = 'checklist'>
-                    <form id="task-form">
-                        <input type="text" placeholder="Enter New Task" id="name"/>
-                        <input type="submit" value="Create Task"/>
-                    </form>
-                    <ul id = 'task-list'>Checklist   
-                    </ul>
+                    <h4>Checklist</h4>
+                    <div>
+                        <form id="task-form">
+                            <input type="text" placeholder="Enter New Task" id="name"/>
+                            <input type="submit" value="Create Task"/>
+                        </form>
+                        <ul id = 'task-list'>Checklist   
+                        </ul>
+                    </div>
                 </div>
                 
-                <div id = 'completed-tasks'>Completed Tasks
+                <div id = 'completed-tasks'>
+                    <h4>Completed Tasks</h4>
+                    <div id="completedUlDiv"></div>
                 </div>
             </div>
 

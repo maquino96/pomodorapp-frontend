@@ -1,5 +1,3 @@
-
-
 const dbUrl = 'http://localhost:3000'
 const adviceUrl = 'https://api.adviceslip.com/advice'
 
@@ -12,7 +10,7 @@ const taskForm = document.querySelector('form#task-form')
 const taskList = document.querySelector('ul#task-list')
 const sessionList = document.querySelector('ul#session-list')
 const adviceDiv = document.querySelector('div#advice')
-const completedDiv = document.querySelector('div#completed-tasks')
+const completedDiv = document.querySelector('div#completedUlDiv')
 
 const container = document.querySelector('div#container')
 const welcomeDiv = document.querySelector('div#welcome-div')
@@ -20,11 +18,15 @@ const errorP = document.querySelector("p#error-p")
 const spotifyDiv = document.querySelector("div#spotify-div")
 const startButton = document.querySelector("button#start-session")
 const stopButton = document.querySelector("button#stop-session")
+const timerButton = document.querySelector("button#timer-settings")
 
 const userInfo = document.querySelector('div#user-info')
+const timerForm = document.querySelector('form#timer-form')
 
+const sessionP = document.querySelector('p#sessionMsgs')
+
+//Initialize listeners after page loads
 document.addEventListener("DOMContentLoaded", event => {
-    container.style.display = 'none'
     formListeners()
     clickListeners()
 })
@@ -41,6 +43,7 @@ const toggleErrorP = () => {
     errorP.classList.toggle('hidden')
 }
 
+//Show/hide the session start/stop buttons
 const startStop = () => {
     startButton.classList.toggle('hidden')
     stopButton.classList.toggle('hidden')
@@ -57,6 +60,7 @@ function getAdvice() {
 function getTasks(){
     taskList.innerHTML = ''
 
+    //Get all of user's checklist tasks, add complete/delete buttons for each
     fetch(`${dbUrl}/users/${loginForm.dataset.id}/tasks`)
         .then(r => r.json())
         .then( tasks => {
@@ -80,6 +84,7 @@ function getTasks(){
 
 //Get tasks associated with each session
 const getSessionTasks = (sessionId) => {
+    completedDiv.innerHTML = ''
     const ul = document.createElement('ul')
     fetch(`${dbUrl}/study_sessions/${sessionId}/tasks`)
         .then( r => r.json())
@@ -120,9 +125,15 @@ function getSessions(){
                 deleteButton.textContent = "❌"
                 li.append(deleteButton)
                 sessionList.append(li)
-                sessionList.append(getSessionTasks(session.id))
+                li.append(getSessionTasks(session.id))
         })
     })
+}
+
+const updateTimerForm = (user) => {
+    //Set timer form fields to user's current timings
+    timerForm.querySelector("input#workTimer").value = user.timer_interval
+    timerForm.querySelector("input#breakTimer").value = user.timer_break
 }
 
 
@@ -147,11 +158,21 @@ const formListeners = () => {
                 .then(r => r.json())
                 .then(user => {
                     if (user) {
+                        //Set ID of logged in user
                         loginForm.dataset.id = user.id
+                        //Hide "login" page and show Pomodoro dashboard
                         welcomeDiv.style.display = 'none'
                         container.style.display = 'inline-grid'
+
+                        //Show spotify playlist
                         spotifyDiv.innerHTML = `<iframe src="${user.playlist}" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`
-                        userInfo.querySelector('h3#username').innerText = user.name
+
+                        //Show username
+                        userInfo.querySelector('h4#username').innerText = user.name
+
+                        updateTimerForm(user);
+
+                        //Fetch user's tasks, sessions, and fetch advice quote
                         getTasks()
                         getSessions()
                         getAdvice()
@@ -168,7 +189,6 @@ const formListeners = () => {
 
         //Listen for signup submissions
         if (event.target.matches("form#register-form")){
-            // event.preventDefault()
             
             fetch(`${dbUrl}/users`, {
                 method: 'POST',
@@ -195,7 +215,6 @@ const formListeners = () => {
 
         //Add listener for new task form, reload tasks on addition
         if (event.target.matches("form#task-form")){
-            // event.preventDefault()
         
             fetch(`${dbUrl}/tasks`, {
                 method: 'POST',
@@ -217,12 +236,45 @@ const formListeners = () => {
             
             event.target.reset()
         }
+
+        //Handle form input for editing timers
+        if (event.target.matches('form#timer-form')) {
+            const id = loginForm.dataset.id
+            const timer_interval = event.target.workTimer.value
+            const timer_break = event.target.breakTimer.value
+        
+            fetch(`${dbUrl}/users/${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type':'application/json',
+                    Accept: 'application/json'
+                }, 
+                body: JSON.stringify({timer_interval, timer_break})
+            })
+                .then(r => r.json())
+                .then(user => {
+                    timerForm.classList.toggle('hidden')
+                    updateTimerForm(user)
+                    sessionP.textContent = "Timers successfully updated."
+                })
+        
+        }
     })
 }
 
 //Listens for study session start/stop
 sessionDiv.addEventListener('click', event => {
     
+    //Listen for clicks on timer settings button, show timers
+    if (event.target.matches('button#timer-settings')){
+        if (sessionDiv.dataset.id === "null") {
+            timerForm.classList.toggle('hidden')
+        } else {
+            sessionP.textContent = "You cannot edit your timers while a session is active."
+        }
+    }
+
+    //Start study session, set sessionId
     if (event.target.matches('button#start-session')) {
         fetch(`${dbUrl}/study_sessions`, {
             method: 'POST',
@@ -235,11 +287,12 @@ sessionDiv.addEventListener('click', event => {
         .then(r => r.json())
         .then( studySession => {
             startStop()
-            console.log(studySession)
+            sessionP.textContent = "Study session started!"
             sessionDiv.dataset.id = studySession.id
         })
     }
 
+    //Stop study session, update study sessions list, clear completed tasks for session
     if (event.target.matches('button#stop-session')) {
         fetch(`${dbUrl}/study_sessions/${event.target.parentElement.dataset.id}`, {
             method: 'PATCH',
@@ -249,6 +302,7 @@ sessionDiv.addEventListener('click', event => {
         })
         .then(r => r.json())
         .then( studySession => {
+            sessionP.textContent = "Study session ended!"
             startStop()
             console.log(studySession)
             getSessions()
@@ -262,28 +316,32 @@ sessionDiv.addEventListener('click', event => {
 const clickListeners = () => {
     body.addEventListener('click', event => {
         
+        //Show registration fields on click
         if(event.target.matches('button#register-button')){
             toggleRegistration()
         }
 
+        //Complete task on click - create studytask, refresh task list
         if(event.target.matches('button.completeButton')){
             const task_id = event.target.parentElement.dataset.id
             const study_session_id = sessionDiv.dataset.id
-
-            fetch(`${dbUrl}/study_tasks`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json'
-                },
-                body: JSON.stringify({task_id, study_session_id})
-            })
-                .then(() => {
-                    getTasks()
-                    completedDiv.innerHTML = ''
-                    completedDiv.append(getSessionTasks(study_session_id))
+            if (study_session_id === "null"){
+                alert("You must start a study session to complete a task!")
+            } else {
+                fetch(`${dbUrl}/study_tasks`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json'
+                    },
+                    body: JSON.stringify({task_id, study_session_id})
                 })
-                .catch(error => console.log(error))
+                    .then(() => {
+                        getTasks()
+                        completedDiv.append(getSessionTasks(study_session_id))
+                    })
+                    .catch(error => console.log(error))
+            }
         }
 
         //Delete TASK button action
@@ -300,6 +358,7 @@ const clickListeners = () => {
                 .catch(error => console.log(error))
         }
 
+        //Delete study session
         if (event.target.matches('button.deleteSessionButton')){
             const session_id = event.target.parentElement.dataset.id
             console.log(session_id)
