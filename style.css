@@ -9,8 +9,8 @@ body *{
 
 #container {
   display: inline-grid;
-  grid-template-columns: 30% 70%;
-  grid-template-rows: 30% 20% 50%;
+  grid-template-columns: 21em 70%;
+  grid-template-rows: 9em 9em;
   column-gap: 10px;
   row-gap: 10px;
   /* justify-items: stretch; */
