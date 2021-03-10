@@ -113,16 +113,12 @@ function getSessions(){
                 date = new Date(Date.parse(session.created_at)).toLocaleDateString()
 
                 const li = document.createElement('li')
-<<<<<<< HEAD
                 li.textContent = `Created On: ${date} Session Time: ${session.time_spent}`
-=======
                 li.dataset.id = session.id
-                li.textContent = `Session Time: ${session.time_spent}`
                 const deleteButton = document.createElement('button')
                 deleteButton.classList.add("deleteSessionButton")
                 deleteButton.textContent = "❌"
                 li.append(deleteButton)
->>>>>>> f1be42aee917ed635f66877c41eb4e02ab25c585
                 sessionList.append(li)
                 sessionList.append(getSessionTasks(session.id))
         })
@@ -320,8 +316,5 @@ const clickListeners = () => {
     })
 }
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> f1be42aee917ed635f66877c41eb4e02ab25c585
