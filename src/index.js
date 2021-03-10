@@ -1,25 +1,42 @@
 const dbUrl = 'http://localhost:3000'
 const adviceUrl = 'https://api.adviceslip.com/advice'
 
-const div = document.querySelector('div#button-div')
+const sessionDiv = document.querySelector('div#session-div')
 const body = document.querySelector('body')
 
 const loginForm = document.querySelector('form#login-form')
-const signupForm = document.querySelector('form#signup-form')
+const registerForm = document.querySelector('form#register-form')
 const taskForm = document.querySelector('form#task-form')
 const taskList = document.querySelector('ul#task-list')
 const sessionList = document.querySelector('ul#session-list')
 const adviceDiv = document.querySelector('div#advice')
 const completedDiv = document.querySelector('div#completed-tasks')
 
+const container = document.querySelector('div#container')
+const welcomeDiv = document.querySelector('div#welcome-div')
+const errorP = document.querySelector("p#error-p")
+const spotifyDiv = document.querySelector("div#spotify-div")
+
 
 document.addEventListener("DOMContentLoaded", event => {
-    taskForm.style.display = 'none'
+    container.style.display = 'none'
     formListeners()
     clickListeners()
 })
 
 // Functions
+
+//Toggle hiding Registration form
+const toggleRegistration = () => {
+    registerForm.classList.toggle('hidden')
+}
+
+//Toggle hiding p element that shows login/registration errors
+const toggleErrorP = () => {
+    errorP.classList.toggle('hidden')
+}
+
+//Fetch advice from API
 function getAdvice() {
     fetch(adviceUrl)
         .then(r => r.json())
@@ -76,7 +93,6 @@ function getSessions(){
         .then(r => r.json())
         .then( sessions => {
             sessions.forEach(session => {
-                debugger
                 const li = document.createElement('li')
                 li.textContent = `Session Time: ${session.time_spent}`
                 sessionList.append(li)
@@ -85,7 +101,8 @@ function getSessions(){
     })
 }
 
-// Event Listeners
+
+//******************** Event Listeners ********************//
 
 //Listens to "login" form, then pulls user's tasks/sessions
 const formListeners = () => {
@@ -105,33 +122,51 @@ const formListeners = () => {
             })
                 .then(r => r.json())
                 .then(user => {
-                    loginForm.dataset.id = user.id
-                    taskForm.style.display = 'block'
-                    getTasks()
-                    getSessions()
-                    getAdvice()
-                    console.log(user)})
-                .catch( error => console.log(error))
-            
-            event.target.reset()
+                    console.log(user)
+                    if (user) {
+                        loginForm.dataset.id = user.id
+                        welcomeDiv.style.display = 'none'
+                        container.style.display = 'inline-grid'
+                        spotifyDiv.innerHTML = `<iframe src="${user.playlist}" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`
+                        getTasks()
+                        getSessions()
+                        getAdvice()
+                        console.log(user)
+                    } else {
+                        if(errorP.classList.contains('hidden')){
+                            toggleErrorP()
+                        }
+                        errorP.textContent = "Invalid Username. Please try again, or sign up!"
+                        event.target.reset()
+                    }
+                })
+                .catch(error => console.log(error))
         }
 
         //Listen for signup submissions
-        if (event.target.matches("form#signup-form")){
+        if (event.target.matches("form#register-form")){
             // event.preventDefault()
-
+            
             fetch(`${dbUrl}/users`, {
                 method: 'POST',
-                headers: {'Content-Type' : 'application/json',
-                                'Accept': 'application/json'},
+                headers: {
+                    'Content-Type' : 'application/json',
+                    Accept: 'application/json'
+                },
                 body: JSON.stringify({name: event.target.name.value}) 
             })
                 .then(r => r.json())
                 .then(user => {
-                    console.log(user)
+                    if (errorP.classList.contains('hidden')){
+                       toggleErrorP()
+                    }
+                    if (user) {
+                        errorP.textContent = "Registration successful. You may now sign in!"
+                    } else {
+                        errorP.textContent = "Username must be unique. Try another one."
+                    }
                 })
-                .catch( error => console.log(error))
-            
+                .catch(error => console.log(error))
             event.target.reset()
         }
 
@@ -141,11 +176,14 @@ const formListeners = () => {
         
             fetch(`${dbUrl}/tasks`, {
                 method: 'POST',
-                headers: {'Content-Type' : 'application/json',
-                                'Accept': 'application/json'},
+                headers: {
+                    'Content-Type' : 'application/json',
+                    'Accept': 'application/json'
+                },
                 body: JSON.stringify({
                         name: event.target.name.value,
-                        user_id: loginForm.dataset.id}) 
+                        user_id: loginForm.dataset.id
+                }) 
             })
                 .then(r => r.json())
                 .then(task => {
@@ -160,19 +198,22 @@ const formListeners = () => {
 }
 
 //Listens for study session start/stop
-div.addEventListener('click', event => {
+sessionDiv.addEventListener('click', event => {
 
     if (event.target.matches('button#start-session')) {
         fetch(`${dbUrl}/study_sessions`, {
             method: 'POST',
-            headers: {'Content-Type' : 'application/json',
-                        'Accept': 'application/json'},
+            headers: {
+                'Content-Type' : 'application/json',
+                Accept: 'application/json'
+            },
             body: JSON.stringify({user_id: loginForm.dataset.id}) 
         })
         .then(r => r.json())
         .then( studySession => {
             console.log(studySession)
-            div.dataset.id = studySession.id})
+            sessionDiv.dataset.id = studySession.id
+        })
     }
 
     if (event.target.matches('button#stop-session')) {
@@ -185,7 +226,7 @@ div.addEventListener('click', event => {
         .then(r => r.json())
         .then( studySession => {
             console.log(studySession)
-            div.dataset.id = null
+            sessionDiv.dataset.id = null
             getSessions()
             completedDiv.innerHTML=''
         })
@@ -196,7 +237,11 @@ div.addEventListener('click', event => {
 const clickListeners = () => {
     body.addEventListener('click', event => {
         const task_id = event.target.parentElement.dataset.id
-        const study_session_id = div.dataset.id
+        const study_session_id = sessionDiv.dataset.id
+
+        if(event.target.matches('button#register-button')){
+            toggleRegistration()
+        }
 
         if(event.target.matches('button#completeButton')){
             fetch(`${dbUrl}/study_tasks`, {

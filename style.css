@@ -1,3 +1,66 @@
+body *{
+  border-style: solid;
+  padding: 10px 10px 10px 10px
+}
+
+.hidden {
+  display: none;
+}
+
+#container {
+  display: inline-grid;
+  grid-template-columns: 30% 70%;
+  grid-template-rows: 30% 20% 50%;
+  column-gap: 2em;
+  row-gap: 2em;
+  justify-items: stretch;
+  width:100%;
+  height:100%;
+}
+
+#welcome-div{
+  display:inline-block;
+  position: relative;
+  left: 30%;
+  top: 30%;
+  text-align:center;
+}
+
+#user-stuff {
+  grid-row-start: 1;
+  grid-column-start: 1;
+}
+
+#button-div {
+  grid-column-start: 2;
+}
+
+
+#advice {
+  text-align: center;
+}
+
+div > div {
+  border-color: green;
+}
+
+div > ul {
+  border-color: red;
+}
+
+div > form {
+  border-color: blue;
+}
+
+
+
+
+
+
+
+/* from skeleton copy 
+
+
 .logo{
   text-align: center;
   background-color: rgb(49, 109, 179);
@@ -49,4 +112,4 @@ input[type="text"]{
 #image{
   width: 300px;
   height: 300px;
-}
+} */

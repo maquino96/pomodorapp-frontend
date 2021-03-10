@@ -2,56 +2,70 @@
     <head>
         <title>PomodorApp</title>
         <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="src/index.js" defer></script>
     </head>
     <body>
-
-        <div id = "advice">
-        </div>
-
-        <div id = "login">                 
-            <form id="login-form"><input type="text" placeholder="Enter Username" id="name"/>
-            <input type="submit" value="Login"/>
+        <div id = "welcome-div">
+            <h1>Welcome to PomodorApp!</h1>    
+            <br>        
+            <form id="login-form">
+                <input type="text" placeholder="Enter Username" id="name"/>
+                <input type="submit" value="Login"/>
             </form> 
-        </div>
-        <!----
-        <div id = "intervals">
-            <form id="interval-form">
-                <input type ="number" >
+            <h3>New here? Sign Up!</h3>
+            <button id = "register-button">Register</button>
+            <form id="register-form" class = 'hidden'>
+                <input type="text" placeholder="Enter New Username" id="name"/>
+                <input type="submit" value="Signup"/>
             </form>
+            <br>
+            <p id="error-p" class='hidden'></p>
         </div>
-            -->
-        <div id = "signup">               
-            <form id="signup-form"><input type="text" placeholder="Enter New Username" id="name"/>
-            <input type="submit" value="Signup"/>
-            </form>
-         </div>
+
+        <div id ="container">
+            <div id= "user-info">
+                <h1 id="username"></h1>
+                <p id ="time">Total Time/Sessions</p>
+            </div>
+
+            <div id = "session-div" data-id = null>
+                timer and interval settings here
+                <br>
+                <!----
+                <form id="interval-form">
+                    <input type ="number">
+                </form>
+                -->
+                <button id="start-session">Start Session</button>
+                <button id="stop-session">Stop Session</button>
+            </div>
+
+            <div id = "spotify-div">
+            </div>
+
+            <div id = "advice">Some Advice:
+            </div>
             
-        <div>
-            <form id="task-form"><input type="text" placeholder="Enter New Task" id="name"/>
-            <input type="submit" value="Create Task"/>
-            </form>
-        </div>
+            <div id = 'Completed-sessions'> 
+                <ul id = 'session-list'>Sessions       
+                </ul>
+            </div>
+            
+            <div id = "task-div-holders">
+                <div id = 'checklist'>
+                    <form id="task-form">
+                        <input type="text" placeholder="Enter New Task" id="name"/>
+                        <input type="submit" value="Create Task"/>
+                    </form>
+                    <ul id = 'task-list'>Checklist   
+                    </ul>
+                </div>
+                
+                <div id = 'completed-tasks'>Completed Tasks
+                </div>
+            </div>
 
-
-        <div id = "button-div" data-id = null>
-            <button id="start-session">Start Session</button>
-            <button id="stop-session">Stop Session</button>
+            
         </div>
-
-        <div id = 'checklist'>
-            <ul id = 'task-list'>Checklist   
-            </ul>
-        </div>
-        
-        <div id = 'completed-tasks'>Completed Tasks
-        </div>
-
-        <div class = 'Completed-sessions'> 
-            <ul id = 'session-list'>Sessions       
-            </ul>
-        </div>
-
-       
-        <script src="src/index.js"></script>
     </body>
 </html>
