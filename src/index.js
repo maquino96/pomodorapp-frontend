@@ -103,10 +103,17 @@ function getSessions(){
         .then( sessions => {
             
             //user-info number of sessions & total time 
-            const sumFunc = (acc,cv) => acc+cv
-            const sum = sessions.map( session => session.time_spent).reduce(sumFunc) 
-            userInfo.querySelector('p#time').innerText = `Completed Sessions: ${sessions.length}, Total time: ${sum}`
+            let sessCount = 0 
+            let sum = 0
 
+            if (sessions.length > 0 ){
+                sessCount = sessions.length 
+                
+                const sumFunc = (acc,cv) => acc+cv
+                sum = sessions.map( session => session.time_spent).reduce(sumFunc) 
+            }
+
+            userInfo.querySelector('p#time').innerText = `Completed Sessions: ${sessCount}, Total time: ${sum} `
               
             sessions.forEach(session => {
 
