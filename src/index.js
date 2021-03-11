@@ -184,8 +184,10 @@ const handleLogin = (event) => {
 
     fetch(`${dbUrl}/users/login`, {
         method: 'POST',
-        headers: {'Content-Type' : 'application/json',
-                        'Accept': 'application/json'},
+        headers: {
+            'Content-Type' : 'application/json',
+            Accept: 'application/json'
+        },
         body: JSON.stringify({name: event.target.name.value}) 
     })
         .then(r => r.json())
@@ -246,7 +248,7 @@ const handleNewTask = (event) => {
         method: 'POST',
         headers: {
             'Content-Type' : 'application/json',
-            'Accept': 'application/json'
+            Accept: 'application/json'
         },
         body: JSON.stringify({
                 name: event.target.name.value,
