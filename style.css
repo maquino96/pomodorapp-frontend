@@ -11,7 +11,7 @@ body *{
 .scroll {
   overflow-y: scroll;
   overflow-x: hidden;
-  height: 5em;
+  height: 70%;
 }
 
 #container {
@@ -22,7 +22,7 @@ body *{
   row-gap: 5px;
   /* justify-items: stretch; */
   width:100%;
-  height:100%;
+  height:auto;
 }
 
 #task-div-holders {
