@@ -12,7 +12,7 @@ const sessionList = document.querySelector('ul#session-list')
 const adviceDiv = document.querySelector('div#advice')
 const completedDiv = document.querySelector('div#completedUlDiv')
 
-const container = document.querySelector('div#container')
+const compartment = document.querySelector('div#compartment')
 const welcomeDiv = document.querySelector('div#welcome-div')
 const errorP = document.querySelector("p#error-p")
 const spotifyDiv = document.querySelector("div#spotify-div")
@@ -169,7 +169,7 @@ const formListeners = () => {
                         loginForm.dataset.id = user.id
                         //Hide "login" page and show Pomodoro dashboard
                         welcomeDiv.style.display = 'none'
-                        container.style.display = 'inline-grid'
+                        compartment.style.display = 'inline-grid'
 
                         //Show spotify playlist
                         spotifyDiv.innerHTML = `<iframe src="${user.playlist}" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`
