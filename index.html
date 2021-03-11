@@ -3,6 +3,7 @@
         <title>PomodorApp</title>
         <meta charset="UTF-8">
         <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="assets/timer.js" defer></script>
         <script src="src/index.js" defer></script>
     </head>
     <body>
@@ -34,6 +35,8 @@
             <div id = "session-div" data-id = null>
                 timer and interval settings here
                 <br>
+                <div class='timer'> 00:00:00 </div>
+                <br>
                 <button id="start-session">Start Session</button>
                 <button id="stop-session" class = "hidden">Stop Session</button>
                 <br>
@@ -49,6 +52,7 @@
                     <input type="submit" value="Update Timers"/>
                 </form>
                 <p id="sessionMsgs"></p>
+                
             </div>
 
             <div id = "spotify-div">
