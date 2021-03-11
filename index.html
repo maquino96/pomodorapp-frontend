@@ -1,31 +1,4 @@
 <html>
-<<<<<<< HEAD
-=======
-    <head>
-        <title>PomodorApp</title>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" type="text/css" href="style.css">
-        <script src="assets/timer.js" defer></script>
-        <script src="src/index.js" defer></script>
-    </head>
-    <body>
-        <div id = "welcome-div">
-            <h1>Welcome to PomodorApp!</h1>    
-            <br>        
-            <form id="login-form">
-                <input type="text" placeholder="Enter Username" id="name"/>
-                <input type="submit" value="Login"/>
-            </form> 
-            <h3>New here? Sign Up!</h3>
-            <button id = "register-button">Register</button>
-            <form id="register-form" class = 'hidden'>
-                <input type="text" placeholder="Enter New Username" id="name"/>
-                <input type="submit" value="Signup"/>
-            </form>
-            <br>
-            <p id="error-p"></p>
-        </div>
->>>>>>> 05b926d71ada872fbd9afb4eeba3a1f2c35c1e96
 
 <head>
     <title>PomodorApp</title>
@@ -56,21 +29,8 @@
                     <p class=Login></p>
                 </div>
 
-<<<<<<< HEAD
                 <div class="content">
                     <h2>Welcome to PomodorApp</h2>
-=======
-            <div id = "session-div" data-id = null>
-                timer and interval settings here
-                <br>
-                <div class='timer'> 00:00:00 </div>
-                <button id="start-session">Start Session</button>
-                <button id="stop-session" class = "hidden">Stop Session</button>
-                <br>
-                <button id="timer-settings">Edit Timers</button>
-                <form id="timer-form" class ='hidden'>
-                    Enter times in minutes:
->>>>>>> 05b926d71ada872fbd9afb4eeba3a1f2c35c1e96
                     <br>
                     <div class='field'>
                         <form id="login-form">
@@ -127,7 +87,6 @@
 
             </div>
 
-<<<<<<< HEAD
             <div class='column'>
                 <!-- column 2 -->
 
@@ -177,7 +136,7 @@
                                                         <input type="text" placeholder="Enter New Task" id="name" />
                                                         <input type="submit" value="Create Task" />
                                                     </form>
-                                                    <ul id='task-list'>Checklist
+                                                    <ul id='task-list' class='scroll'>Checklist
                                                     </ul>
                                                 </div>
                                             </div>
@@ -190,7 +149,7 @@
                                         <div class ='tile box'>
                                             <div id='completed-tasks'>
                                                 <h4>Completed Tasks</h4>
-                                                <div id="completedUlDiv"></div>
+                                                <div id="completedUlDiv" class='scroll'></div>
                                             </div>
                                         </div>
                                     </div>
@@ -200,18 +159,6 @@
 
                             </div>
                         </div>
-=======
-            <div id = "task-div-holders">
-                <div id = 'checklist'>
-                    <h4>Checklist</h4>
-                    <div>
-                        <form id="task-form">
-                            <input type="text" placeholder="Enter New Task" id="name"/>
-                            <input type="submit" value="Create Task"/>
-                        </form>
-                        <ul id = 'task-list' class = 'scroll'>
-                        </ul>
->>>>>>> 05b926d71ada872fbd9afb4eeba3a1f2c35c1e96
                     </div>
                 </div>
 

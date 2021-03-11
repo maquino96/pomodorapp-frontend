@@ -114,7 +114,6 @@ const getTasks = () => {
 const getSessionTasks = (sessionId) => {
     completedDiv.innerHTML = ''
     const ul = document.createElement('ul')
-    ul.classList.add('scroll')
     fetch(`${dbUrl}/study_sessions/${sessionId}/tasks`)
         .then( r => r.json())
         .then( tasks => {
@@ -179,60 +178,8 @@ const updateTimerForm = (user) => {
 
 //******************** Form Helper Functions ********************//
 
-<<<<<<< HEAD
-//******************** Event Listeners ********************//
-
-//Listens to "login" form, then pulls user's tasks/sessions
-const formListeners = () => {
-
-    body.addEventListener('submit', event => {
-        event.preventDefault()
-
-        //Listen for login, then display user's lists
-        if (event.target.matches("form#login-form")){
-            // event.preventDefault()
-
-            fetch(`${dbUrl}/users/login`, {
-                method: 'POST',
-                headers: {'Content-Type' : 'application/json',
-                                'Accept': 'application/json'},
-                body: JSON.stringify({name: event.target.name.value}) 
-            })
-                .then(r => r.json())
-                .then(user => {
-                    if (user) {
-                        //Set ID of logged in user
-                        loginForm.dataset.id = user.id
-                        //Hide "login" page and show Pomodoro dashboard
-                        welcomeDiv.style.display = 'none'
-                        compartment.style.display = 'inline-grid'
-
-                        //Show spotify playlist
-                        spotifyDiv.innerHTML = `<iframe src="${user.playlist}" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`
-
-                        //Show username
-                        userInfo.querySelector('h4#username').innerText = user.name
-
-                        updateTimerForm(user);
-
-                        //Fetch user's tasks, sessions, and fetch advice quote
-                        getTasks()
-                        getSessions()
-                        getAdvice()
-                    } else {
-                        if(errorP.classList.contains('hidden')){
-                            toggleErrorP()
-                        }
-                        errorP.textContent = "Invalid Username. Please try again, or sign up!"
-                        event.target.reset()
-                    }
-                })
-                .catch(error => console.log(error))
-        }
-=======
 //Handle Login form
 const handleLogin = (event) => {
->>>>>>> 05b926d71ada872fbd9afb4eeba3a1f2c35c1e96
 
     fetch(`${dbUrl}/users/login`, {
         method: 'POST',
@@ -249,7 +196,7 @@ const handleLogin = (event) => {
                 loginForm.dataset.id = user.id
                 //Hide "login" page and show Pomodoro dashboard
                 welcomeDiv.style.display = 'none'
-                container.style.display = 'inline-grid'
+                compartment.style.display = 'inline-grid'
 
                 //Show spotify playlist
                 spotifyDiv.innerHTML = `<iframe src="${user.playlist}" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`

@@ -10,7 +10,6 @@ body{
   border-style: solid;
   padding: 5px 5px 5px 5px;
   text-align: center;
-<<<<<<< HEAD
 
 
 
@@ -44,9 +43,6 @@ body{
 
   z-index: -1;
 
-=======
-  margin: 5px 5px 5px 5px;
->>>>>>> 05b926d71ada872fbd9afb4eeba3a1f2c35c1e96
 }
 
 #background-pattern{
@@ -88,13 +84,9 @@ body{
 
 .scroll {
   overflow-y: scroll;
-  overflow-x: hidden;
-<<<<<<< HEAD
-  height: 70%;
-  z-index: 1;
-=======
+  overflow-x: hidden; 
   height: 12em;
->>>>>>> 05b926d71ada872fbd9afb4eeba3a1f2c35c1e96
+  z-index: 1;
 }
 
 #compartment {
