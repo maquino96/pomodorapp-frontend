@@ -3,25 +3,50 @@
         <title>PomodorApp</title>
         <meta charset="UTF-8">
         <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
         <script src="assets/timer.js" defer></script>
         <script src="src/index.js" defer></script>
     </head>
     <body>
+        <div id='background-image'></div>
+        <div id='background-overlay'></div>
+        <div id='background-pattern'></div>
+
+
         <div id = "welcome-div">
-            <h1>Welcome to PomodorApp!</h1>    
-            <br>        
-            <form id="login-form">
-                <input type="text" placeholder="Enter Username" id="name"/>
-                <input type="submit" value="Login"/>
-            </form> 
-            <h3>New here? Sign Up!</h3>
-            <button id = "register-button">Register</button>
-            <form id="register-form" class = 'hidden'>
-                <input type="text" placeholder="Enter New Username" id="name"/>
-                <input type="submit" value="Signup"/>
-            </form>
-            <br>
-            <p id="error-p" class='hidden'></p>
+
+            <div class="card" style="width: 400px;">
+                <div class="card-image">
+                  <figure class="image">
+                    <img src="assets/geometric_logo.jpg" alt="Placeholder image">
+                  </figure>
+                </div>
+                <div class="card-content">
+                  <div class="media">
+                      <p class=Login></p>
+                  </div>
+              
+                  <div class="content"> 
+                    <h2>Welcome to PomodorApp</h2>    
+                    <br>        
+                    <div class='field'>
+                        <form id="login-form">
+                            <input class = 'input' type="text" placeholder="Enter Username" id="name"/>
+                            <input type="submit" class ='button' value="Login"/>
+                        </form>
+                    </div> 
+                    <h3>New here? Sign Up!</h3>
+                    <button class='button' id = "register-button">Register</button>
+                    <form id="register-form" class = 'hidden'>
+                        <input type="text" placeholder="Enter New Username" id="name"/>
+                        <input type="submit" value="Signup"/>
+                    </form>
+                    <br>
+                    <p id="error-p" class='hidden'></p>
+                  </div>
+                </div>
+              </div>
+            
         </div>
 
         <div id ="container">
@@ -37,10 +62,10 @@
                 <br>
                 <div class='timer'> 00:00:00 </div>
                 <br>
-                <button id="start-session">Start Session</button>
-                <button id="stop-session" class = "hidden">Stop Session</button>
+                <button class='button' id="start-session">Start Session</button>
+                <button class='button' id="stop-session" class = "hidden">Stop Session</button>
                 <br>
-                <button id="timer-settings">Edit Timers</button>
+                <button class ='button' id="timer-settings">Edit Timers</button>
                 <form id="timer-form" class ='hidden'>
                     Enter times in minutes:
                     <br>

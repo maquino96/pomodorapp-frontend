@@ -1,17 +1,82 @@
-body *{
-  border-style: solid;
-  padding: 5px 2px 5px 5px;
-  text-align: center;
+
+html{
+  overflow: hidden;
 }
+
+
+
+
+body{
+  /* border-style: solid; */
+  /* padding: 5px 2px 5px 5px; */
+
+  position:absolute;
+  width:100%;
+  height:100%;
+  margin: 0;
+  padding: 0;
+
+  /* text-align: center; */
+}
+
+#background-image{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background-image: url(assets/SpaceBG.jpg); 
+  background-position: center;
+  background-size: cover; 
+
+}
+
+#background-overlay{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background-color:#67178254; 
+
+}
+
+#background-pattern{
+  position:absolute;
+  width:100%;
+  height:100%;
+
+  background-color: #9ed0ff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' %3E%3Cdefs%3E%3ClinearGradient id='a' x1='0' x2='0' y1='0' y2='1' gradientTransform='rotate(86,0.5,0.5)'%3E%3Cstop offset='0' stop-color='%23230042'/%3E%3Cstop offset='1' stop-color='%23ffffff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpattern id='b' width='16' height='16' patternUnits='userSpaceOnUse'%3E%3Ccircle fill='%239ed0ff' cx='8' cy='8' r='8'/%3E%3C/pattern%3E%3Crect width='100%25' height='100%25' fill='url(%23a)'/%3E%3Crect width='100%25' height='100%25' fill='url(%23b)' fill-opacity='0.05'/%3E%3C/svg%3E");
+  background-attachment: fixed;
+  background-size: cover;
+  opacity: 0.25
+
+}
+
+#welcome-div{
+  /* display:inline-block;
+  position: relative;
+  left: 30%;
+  top: 30%; */
+
+
+  position:absolute;
+  width: 100%;
+  height: 100%;
+  display: flex; 
+  align-items: center;
+  justify-content:center;
+
+}
+
 
 .hidden {
   display: none;
+  z-index: 1;
 }
 
 .scroll {
   overflow-y: scroll;
   overflow-x: hidden;
   height: 70%;
+  z-index: 1;
 }
 
 #container {
@@ -23,37 +88,38 @@ body *{
   /* justify-items: stretch; */
   width:100%;
   height:auto;
+  z-index: 1;
 }
 
 #task-div-holders {
     display: inline-grid;
     grid-template-columns: 50% 50%;
-    column-gap: 10px
+    column-gap: 10px;
+    z-index: 1;
+    
 }
 #completed-tasks {
   grid-column-start: 2;
-}
-
-#welcome-div{
-  display:inline-block;
-  position: relative;
-  left: 30%;
-  top: 30%;
+  z-index: 1;
 }
 
 #user-stuff {
   grid-row-start: 1;
   grid-column-start: 1;
+  z-index: 1;
+  
 }
 
 #session-div {
   grid-column-start: 2;
   text-align: center;
+  z-index: 1;
 }
 
 
 #advice {
   text-align: center;
+  z-index: 1;
 }
 
 div > div {
