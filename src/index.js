@@ -244,6 +244,11 @@ sessionDiv.addEventListener('click', event => {
             startStop()
             console.log(studySession)
             sessionDiv.dataset.id = studySession.id
+
+            // Timer start mechanics
+            clock = initClock()
+            sessionDiv.dataset.timer = clock
+            console.log(clock)
         })
     }
 
@@ -261,6 +266,14 @@ sessionDiv.addEventListener('click', event => {
             getSessions()
             sessionDiv.dataset.id = null
             completedDiv.innerHTML=''
+
+
+            // Timer stop mechanics
+            console.log(clock)
+            clearInterval(clock)
+            h,m,s = 0
+            document.querySelector('div.timer').innerText = '00:00:00'
+
         })
     }
 
