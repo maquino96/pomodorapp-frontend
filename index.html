@@ -54,105 +54,119 @@
 
     <div id="compartment">
 
-      
-            <div class='columns'>
 
-                <div class='column'>
+        <div class='columns'>
 
-                    <div class='container'>
-                        <div class='tile is-ancestor'>
-                            <div class='tile is-vertical is-parent'>
-                                <div class='tile is-child box'>
-                                    <div id="user-info">
-                                        <h3>PomodorApp</h3>
-                                        <h4 id="username"></h4>
-                                        <p id="time">Total Time/Sessions</p>
-                                    </div>
+            <div class='column'>
+
+                <div class='container'>
+                    <div class='tile is-ancestor'>
+                        <div class='tile is-vertical is-parent'>
+                            <div class='tile is-child box'>
+                                <div id="user-info">
+                                    <h3>PomodorApp</h3>
+                                    <h4 id="username"></h4>
+                                    <p id="time">Total Time/Sessions</p>
                                 </div>
-                                <div class='tile is-child box'>
-                                    <div id="spotify-div"></div>
-                                </div>
-                                <div class='tile is-child box'>
-                                    <div id='completed-sessions'>
-                                        <div id='alignment-div'>
-                                            <h4>Completed Sessions</h4>
-                                            <ul id='session-list' class="scroll">Sessions</ul>
-                                        </div>
+                            </div>
+                            <div class='tile is-child box'>
+                                <div id="spotify-div"></div>
+                            </div>
+                            <div class='tile is-child box'>
+                                <div id='completed-sessions'>
+                                    <div id='alignment-div'>
+                                        <h4>Completed Sessions</h4>
+                                        <ul id='session-list' class="scroll">Sessions</ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- column 1 -->
-
                 </div>
-    
-                <div class='column'>
-                    <!-- column 2 -->
+                <!-- column 1 -->
 
-                    <div class='container'>
-                        <div class= 'tile is-ancestor'>
-                            <div class='tile is-vertical is-parent'>
+            </div>
 
-                                <div class='tile is-child box'>
-                                    <div id="session-div" data-id=null>
-                                        timer and interval settings here
+            <div class='column'>
+                <!-- column 2 -->
+
+                <div class='container'>
+                    <div class='tile is-ancestor'>
+                        <div class='tile is-vertical is-parent'>
+
+                            <div class='tile is-child box'>
+                                <div id="session-div" data-id=null>
+                                    timer and interval settings here
+                                    <br>
+                                    <div class='timer'> 00:00:00 </div>
+                                    <br>
+                                    <button class='button' id="start-session">Start Session</button>
+                                    <button class='button' id="stop-session" class="hidden">Stop Session</button>
+                                    <br>
+                                    <button class='button' id="timer-settings">Edit Timers</button>
+                                    <form id="timer-form" class='hidden'>
+                                        Enter times in minutes:
                                         <br>
-                                        <div class='timer'> 00:00:00 </div>
+                                        <label for="workTimer">Work Timer: </label>
+                                        <input type="number" id="workTimer" />
                                         <br>
-                                        <button class='button' id="start-session">Start Session</button>
-                                        <button class='button' id="stop-session" class="hidden">Stop Session</button>
-                                        <br>
-                                        <button class='button' id="timer-settings">Edit Timers</button>
-                                        <form id="timer-form" class='hidden'>
-                                            Enter times in minutes:
-                                            <br>
-                                            <label for="workTimer">Work Timer: </label>
-                                            <input type="number" id="workTimer" />
-                                            <br>
-                                            <label for="breakTimer">Break Timer:</label>
-                                            <input type="number" id="breakTimer">
-                                            <input type="submit" value="Update Timers" />
-                                        </form>
-                                        <p id="sessionMsgs"></p>
-                                    </div>
+                                        <label for="breakTimer">Break Timer:</label>
+                                        <input type="number" id="breakTimer">
+                                        <input type="submit" value="Update Timers" />
+                                    </form>
+                                    <p id="sessionMsgs"></p>
                                 </div>
+                            </div>
 
-                                <div class='tile is-child box'>
-                                    <div id="advice">Some Advice:
-                                    </div>
+                            <div class='tile is-child box'>
+                                <div id="advice">Some Advice:
                                 </div>
+                            </div>
 
-                                <div class='tile is-child box'>
-                                    <div id="task-div-holders">
-                                        <div id='checklist'>
-                                            <h4>Checklist</h4>
-                                            <div>
-                                                <form id="task-form">
-                                                    <input type="text" placeholder="Enter New Task" id="name" />
-                                                    <input type="submit" value="Create Task" />
-                                                </form>
-                                                <ul id='task-list'>Checklist
-                                                </ul>
+
+                            <div class='columns' id='2'>
+
+                                <div class='column'>
+                                    <div class='container'>
+                                        <div class='tile box'>
+                                            <div id='checklist'>
+                                                <h4>Checklist</h4>
+                                                <div>
+                                                    <form id="task-form">
+                                                        <input type="text" placeholder="Enter New Task" id="name" />
+                                                        <input type="submit" value="Create Task" />
+                                                    </form>
+                                                    <ul id='task-list'>Checklist
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
-                    
-                                        <div id='completed-tasks'>
-                                            <h4>Completed Tasks</h4>
-                                            <div id="completedUlDiv"></div>
+                                    </div>
+                                </div>
+
+                                <div class='column'>
+                                    <div class='container'>
+                                        <div class ='tile box'>
+                                            <div id='completed-tasks'>
+                                                <h4>Completed Tasks</h4>
+                                                <div id="completedUlDiv"></div>
+                                            </div>
                                         </div>
                                     </div>
                                     
                                 </div>
+
+
                             </div>
                         </div>
                     </div>
-    
-    
                 </div>
-    
+
+
             </div>
-        
+
+        </div>
+
 
 
     </div>
