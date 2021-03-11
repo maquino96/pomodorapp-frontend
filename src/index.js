@@ -248,7 +248,7 @@ sessionDiv.addEventListener('click', event => {
             // Timer start mechanics
             clock = initClock()
             sessionDiv.dataset.timer = clock
-            console.log(clock)
+            // console.log(clock)
         })
     }
 
@@ -269,7 +269,7 @@ sessionDiv.addEventListener('click', event => {
 
 
             // Timer stop mechanics
-            console.log(clock)
+            
             clearInterval(clock)
             h,m,s = 0
             document.querySelector('div.timer').innerText = '00:00:00'

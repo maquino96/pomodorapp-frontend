@@ -29,7 +29,7 @@ function updateClock(){
       h = "0"+h
     }
   }
-  console.log(h,m,s)
+  // console.log(h,m,s)
   document.querySelector('div.timer').innerText = `${h}:${m}:${s}`
 
 }
