@@ -1,7 +1,8 @@
 body *{
   border-style: solid;
-  padding: 5px 2px 5px 5px;
+  padding: 5px 5px 5px 5px;
   text-align: center;
+  margin: 5px 5px 5px 5px;
 }
 
 .hidden {
@@ -11,7 +12,7 @@ body *{
 .scroll {
   overflow-y: scroll;
   overflow-x: hidden;
-  height: 70%;
+  height: 12em;
 }
 
 #container {
@@ -50,7 +51,6 @@ body *{
   grid-column-start: 2;
   text-align: center;
 }
-
 
 #advice {
   text-align: center;
