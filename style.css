@@ -128,9 +128,9 @@ body{
   z-index: 1;
 }
 
-/* h4 {
+h4 {
   text-align: center;
-} */
+}
 
 .astext {
   background:none;
@@ -139,4 +139,3 @@ body{
   padding:7px;
   cursor: pointer;
 }
-

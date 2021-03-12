@@ -29,10 +29,12 @@ const hideStartButton = document.querySelector('div#start-encapsulate')
 const breakTimer = document.querySelector('div#break-timer')
 const hideTaskForm = document.querySelector('div#hide-task-form')
 
+
 //Initialize listeners after page loads
 document.addEventListener("DOMContentLoaded", event => {
     formListeners()
     clickListeners()
+
 })
 
 // Functions
