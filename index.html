@@ -108,7 +108,9 @@
 
                                 <div class='tile is-child box'>
                                     <div id="session-div" data-id=null class='title is-4'>
-                                        Timer:
+                                        <h4 class='title is-4'> Timer</h4>
+                                        <p id='timer'></p>
+
                                         <br>
                                         <div class='timer'> 00:00:00 </div>
                                         <br>
@@ -133,14 +135,14 @@
                                             <br>
                                             <label for="breakTimer">Break Timer:</label>
                                             <input type="number" id="breakTimer">
-                                            <input type="submit" value="Update Timers" />
+                                            <input type="submit" class ='button is-primary' value="Update Timers" />
                                         </form>
                                         <p id="sessionMsgs"></p>
                                     </div>
                                 </div>
 
                                 <div class='tile is-child box'>
-                                    <div id="advice">Some Advice:
+                                    <div id="advice">
                                     </div>
                                 </div>
 
@@ -152,8 +154,8 @@
                                             <div class='tile box'>
                                                 <div id='checklist' class='scroll'>
                                                     <h4 id='checklist' class='title is-4'>++Checklist</h4>
-                                                    <div class='hidden' id='hide-task-form'>
-                                                        <form id="task-form">
+                                                    <div id='hide-task-form'>
+                                                        <form class='hidden' id="task-form">
                                                             <input class= 'input' type="text" placeholder="Enter New Task" id="name" />
                                                             <input class= 'button is-primary is-rounded' type="submit" value="Create Task" />
                                                         </form>

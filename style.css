@@ -80,7 +80,7 @@ body{
 .scroll {
   overflow-y: scroll;
   overflow-x: hidden; 
-  height: 18em;
+  height: 25em;
   z-index: 1;
 }
 
@@ -107,6 +107,7 @@ body{
 #completed-tasks {
   grid-column-start: 2;
   z-index: 1;
+  text-align: center;
 }
 
 #user-stuff {
@@ -127,7 +128,15 @@ body{
   z-index: 1;
 }
 
+/* h4 {
+  text-align: center;
+} */
 
-
-
+.astext {
+  background:none;
+  border:none;
+  margin:0;
+  padding:7px;
+  cursor: pointer;
+}
 

@@ -76,7 +76,7 @@ const toggleBreakTimer = () => {
 //Toggle task form
 
 const toggleTaskForm = () => {
-    hideTaskForm.classList.toggle('hidden')
+    taskForm.classList.toggle('hidden')
 }
 
 //Show/hide the session start/stop buttons
@@ -90,7 +90,10 @@ const toggleSessionButton = () => {
 const getAdvice = () => {
     fetch(adviceUrl)
         .then(r => r.json())
-        .then(adviceSlip => adviceDiv.textContent = adviceSlip.slip.advice)
+        .then(adviceSlip => {            
+
+            adviceDiv.innerText = `TIP OF THE DAY: ${adviceSlip.slip.advice}`})
+            
 }
 
 //Fetches tasks to populate user's checklst
@@ -104,17 +107,20 @@ const getTasks = () => {
             tasks.forEach( task => {
                 //Create li, set task id and name
                 const li = document.createElement('li')
+                li.className = 'notification is-primary'
                 li.dataset.id = task.id
                 li.textContent = task.name
 
                 //Add complete task button
                 const completeButton = document.createElement('button')
                 completeButton.classList.add("completeButton")
+                completeButton.classList.add('astext')
                 completeButton.textContent = "✅"
 
                 //Add delete task button
                 const deleteButton = document.createElement('button')
                 deleteButton.classList.add("deleteTaskButton")
+                deleteButton.classList.add('astext')
                 deleteButton.textContent = "❌"
 
                 //Add new li to list
@@ -135,6 +141,7 @@ const getSessionTasks = (sessionId) => {
         .then( tasks => {
             tasks.forEach( task => {
                 const li = document.createElement('li')
+                // li.classList = 'notification is-primary'
                 li.textContent = task.name
                 ul.append(li)
             })
@@ -178,10 +185,8 @@ const getSessions = () => {
 
             // }
 
-
-
-            let sec = sum % 60
-            let min = 
+            // let sec = sum % 60
+            // let min = 
 
             userInfo.querySelector('p#time').innerText = `Completed Sessions: ${sessCount}, Total time: ${sum} `
             
@@ -191,13 +196,15 @@ const getSessions = () => {
                 date = new Date(Date.parse(session.created_at)).toLocaleDateString()
 
                 const li = document.createElement('li')
+                li.className = 'notification is-primary is-light'
                 li.textContent = `Created On: ${date} Session Time: ${session.time_spent}`
                 li.dataset.id = session.id
 
                 //Add delete session button
                 const deleteButton = document.createElement('button')
+                deleteButton.classList = 'delete'
                 deleteButton.classList.add("deleteSessionButton")
-                deleteButton.textContent = "❌"
+                // deleteButton.textContent = "❌"
                 li.append(deleteButton)
 
                 sessionList.append(li)
@@ -210,6 +217,7 @@ const updateTimerForm = (user) => {
     //Set timer form fields to user's current timings
     timerForm.querySelector("input#workTimer").value = user.timer_interval
     timerForm.querySelector("input#breakTimer").value = user.timer_break
+    sessionDiv.querySelector('p#timer').innerText = `Interval: ${user.timer_interval} minutes / Break: ${user.timer_break} minutes`
 }
 
 //******************** Form Helper Functions ********************//
@@ -322,6 +330,7 @@ const handleTimerEdit = (event) => {
     })
         .then(r => r.json())
         .then(user => {
+
             //Hide update fields after update succeeds
             timerForm.classList.toggle('hidden')
             updateTimerForm(user)
