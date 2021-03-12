@@ -43,6 +43,17 @@ document.addEventListener("DOMContentLoaded", event => {
 
 // Functions
 
+// string time
+const stringTime = (sum) => {
+
+    let hour = Math.floor(sum/3600)
+    let remainder = sum%3600
+    let min = Math.floor(remainder/60)
+    let seconds = remainder%60
+
+    return `${hour}h ${min}m ${seconds}s`
+}
+
 //Saves session on page reload without page update actions
 const saveSessionOnClose = (event) => {
     fetch(`${dbUrl}/study_sessions/${sessionDiv.dataset.id}`, {
@@ -177,24 +188,7 @@ const getSessions = () => {
             }
 
 
-
-            // if(sum > 3600){
-            //     let modHour = sum%3600
-            //     let printHour = sum - modHour/3600
-                
-            //     let printSec = modHour%60
-            //     let printMin = (modHour - printSec)/60 
-            // }   
-
-            // if( 60 < sum < 3600){
-            //     let printHour = '00'
-
-            // }
-
-            // let sec = sum % 60
-            // let min = 
-
-            userInfo.querySelector('p#time').innerText = `Completed Sessions: ${sessCount}, Total time: ${sum} `
+            userInfo.querySelector('p#time').innerText = `Completed Sessions: ${sessCount}, Total time: ${stringTime(sum)} `
             
             //Populate sessions list with session lis
             sessions.forEach(session => {
@@ -203,7 +197,7 @@ const getSessions = () => {
 
                 const li = document.createElement('li')
                 li.className = 'notification is-primary is-light'
-                li.textContent = `Created On: ${date} Session Time: ${session.time_spent}`
+                li.textContent = `Created On: ${date} Session Time: ${stringTime(session.time_spent)}`
                 li.dataset.id = session.id
 
                 //Add delete session button
