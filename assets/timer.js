@@ -47,8 +47,8 @@ function updateClock(){
 
 }
 
-var initClock = () => setInterval("updateClock()", 1000)
-var breakClock = () => setInterval("breakFunc()",1000)
+var initClock = () => setInterval("updateClock()", 25)
+var breakClock = () => setInterval("breakFunc()",25)
 
 function breakFunc(){
   // debugger

@@ -22,11 +22,12 @@ const timerButton = document.querySelector("button#timer-settings")
 
 const userInfo = document.querySelector('div#user-info')
 const timerForm = document.querySelector('form#timer-form')
-
 const sessionP = document.querySelector('p#sessionMsgs')
+
 const hideStopButton = document.querySelector('div#button-encapsulate')
 const hideStartButton = document.querySelector('div#start-encapsulate')
 const breakTimer = document.querySelector('div#break-timer')
+const hideTaskForm = document.querySelector('div#hide-task-form')
 
 //Initialize listeners after page loads
 document.addEventListener("DOMContentLoaded", event => {
@@ -72,6 +73,11 @@ const toggleBreakTimer = () => {
     breakTimer.classList.toggle('hidden')
 }
 
+//Toggle task form
+
+const toggleTaskForm = () => {
+    hideTaskForm.classList.toggle('hidden')
+}
 
 //Show/hide the session start/stop buttons
 const toggleSessionButton = () => {
@@ -156,6 +162,26 @@ const getSessions = () => {
                 const sumFunc = (acc,cv) => acc+cv
                 sum = sessions.map( session => session.time_spent).reduce(sumFunc) 
             }
+
+
+
+            // if(sum > 3600){
+            //     let modHour = sum%3600
+            //     let printHour = sum - modHour/3600
+                
+            //     let printSec = modHour%60
+            //     let printMin = (modHour - printSec)/60 
+            // }   
+
+            // if( 60 < sum < 3600){
+            //     let printHour = '00'
+
+            // }
+
+
+
+            let sec = sum % 60
+            let min = 
 
             userInfo.querySelector('p#time').innerText = `Completed Sessions: ${sessCount}, Total time: ${sum} `
             
@@ -303,6 +329,7 @@ const handleTimerEdit = (event) => {
             currUserInterval = user.timer_interval
             currUserBreak = user.timer_break
             bT = currUserInterval*60
+
         })
         
 }
@@ -487,6 +514,11 @@ const clickListeners = () => {
         //Delete study session
         if (event.target.matches('button.deleteSessionButton')){
             deleteSession(event)
+        }
+
+        //toggle taskForm on ++Checklist 
+        if(event.target.matches('h4#checklist')){
+            toggleTaskForm()
         }
     })
 }
