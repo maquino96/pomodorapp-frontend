@@ -35,6 +35,10 @@ document.addEventListener("DOMContentLoaded", event => {
     formListeners()
     clickListeners()
 
+    // quick and dirty
+    document.querySelectorAll('.tile:not(.is-child)').forEach(el => el.style.display = 'block')
+
+
 })
 
 // Functions
