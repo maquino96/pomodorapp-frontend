@@ -100,8 +100,17 @@
                                     <br>
                                     <div class='timer'> 00:00:00 </div>
                                     <br>
-                                    <button class='button' id="start-session">Start Session</button>
-                                    <button class='button' id="stop-session" class="hidden">Stop Session</button>
+                                    <div id = start-encapsulate>
+                                        <button class='button' id="start-session">Start Session</button>
+                                    </div>
+                                    
+                                    <div class= 'hidden' id = button-encapsulate>
+                                        <button class='button' id="stop-session" >Stop Session</button>
+                                    </div>
+
+                                    <div class='hidden' id = 'break-timer'>
+                                        00:00:00
+                                    </div>
                                     <br>
                                     <button class='button' id="timer-settings">Edit Timers</button>
                                     <form id="timer-form" class='hidden'>

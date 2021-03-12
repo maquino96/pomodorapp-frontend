@@ -1,10 +1,12 @@
 
-const y = document.querySelector('div.timer')
-let x = parseInt(y.innerText)
+let h =0
+let m = 0
+let s = 0
 
-let h =0, m = 0, s = 0
+let currUserInterval = 0
+let currUserBreak = 0
 
-let finish_bool = parseInt(y.dataset.finish) 
+let bT = 0
 
 
 function updateClock(){
@@ -32,8 +34,35 @@ function updateClock(){
   // console.log(h,m,s)
   document.querySelector('div.timer').innerText = `${h}:${m}:${s}`
 
+  // console.log(m)
+
+  if ( parseInt(m) > 0 && parseInt(m)%currUserInterval===0 && parseInt(s) === 0){
+    // alert doesn't work, will get stuck with alert 
+    alert(`Please take your ${currUserBreak} minute break.`)
+    
+    breakVar = breakClock()
+    toggleBreakTimer()
+
+  }
+
 }
 
 var initClock = () => setInterval("updateClock()", 1000)
+var breakClock = () => setInterval("breakFunc()",1000)
 
+function breakFunc(){
+  // debugger
+  breakTimer.innerText = `${bT}`
+  bT-=1
+  console.log(bT)
 
+  if(bT === 0){
+    // debugger
+    alert('Break Over')
+    bT = currUserBreak *60
+    toggleBreakTimer()
+    clearInterval(breakVar)
+   
+  }
+
+}

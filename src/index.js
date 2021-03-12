@@ -24,6 +24,9 @@ const userInfo = document.querySelector('div#user-info')
 const timerForm = document.querySelector('form#timer-form')
 
 const sessionP = document.querySelector('p#sessionMsgs')
+const hideStopButton = document.querySelector('div#button-encapsulate')
+const hideStartButton = document.querySelector('div#start-encapsulate')
+const breakTimer = document.querySelector('div#break-timer')
 
 //Initialize listeners after page loads
 document.addEventListener("DOMContentLoaded", event => {
@@ -64,10 +67,17 @@ const toggleRegistration = () => {
     registerForm.classList.toggle('hidden')
 }
 
+//Toggle break timer
+const toggleBreakTimer = () => {
+    breakTimer.classList.toggle('hidden')
+}
+
+
 //Show/hide the session start/stop buttons
 const toggleSessionButton = () => {
-    startButton.classList.toggle('hidden')
-    stopButton.classList.toggle('hidden')
+    // debugger
+    hideStartButton.classList.toggle('hidden')
+    hideStopButton.classList.toggle('hidden')
 }
 
 //Fetch advice from API
@@ -210,6 +220,12 @@ const handleLogin = (event) => {
                 getTasks()
                 getSessions()
                 getAdvice()
+
+                // set the User's interval and break
+                currUserInterval = user.timer_interval
+                currUserBreak = user.timer_break
+                bT = currUserBreak*60
+                // debugger
             } else {
                 errorP.textContent = "Invalid Username. Please try again, or sign up!"
                 event.target.reset()
@@ -284,6 +300,9 @@ const handleTimerEdit = (event) => {
             timerForm.classList.toggle('hidden')
             updateTimerForm(user)
             sessionP.textContent = "Timers successfully updated."
+            currUserInterval = user.timer_interval
+            currUserBreak = user.timer_break
+            bT = currUserInterval*60
         })
         
 }
@@ -315,7 +334,7 @@ const handleSessionStart = (event) => {
 
 //Handle session stop
 const handleSessionStop = (event) => {
-    fetch(`${dbUrl}/study_sessions/${event.target.parentElement.dataset.id}`, {
+    fetch(`${dbUrl}/study_sessions/${sessionDiv.dataset.id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type' : 'application/json',
@@ -333,11 +352,12 @@ const handleSessionStop = (event) => {
             completedDiv.innerHTML=''
 
             // Timer stop mechanics
-            
-            clearInterval(clock)
-            h,m,s = 0
+            h = 0
+            m = 0 
+            s = 0
             document.querySelector('div.timer').innerText = '00:00:00'
 
+            clearInterval(clock)
         })
 }
 
